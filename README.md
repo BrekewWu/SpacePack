@@ -10,7 +10,7 @@ The SpacePack is written using the shell, in order to quickly deploy LNMP(Linux,
 
 ### Demo
 
-![Auto fdisk](http://i2.bvimg.com/1949/2bb849d083e33b6d.png) 
+![Auto fdisk](http://ww1.sinaimg.cn/large/0060lm7Tly1fktmwzzvfpj31000n7n3q.jpg) 
 
 ### How to use
 
