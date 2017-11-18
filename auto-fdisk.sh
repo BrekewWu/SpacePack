@@ -55,7 +55,7 @@ while mount | grep "$Disk" > /dev/null 2>&1;do
 			umount $i >/dev/null
 			temp=`echo $Disk | sed 's;/;\\\/;g'`
 			sed -i -e "/^$temp/d" /etc/fstab
-			sleep 2
+			sleep 1
 		done
 		echo -e "\033[32mSuccess, the disk is unloaded!\033[0m"
 	fi
@@ -70,7 +70,7 @@ while mount | grep "$Disk" > /dev/null 2>&1;do
 	else
 		echo -e "\033[33mIs running, please wait!\033[0m"
 		dd if=/dev/zero of=$Disk bs=512 count=1 &>/dev/null
-		sleep 2
+		sleep 1
 	sync
 	fi
 	echo -e "\033[32mSuccess, the disk has been formatted!\033[0m"
@@ -87,7 +87,7 @@ p
 wq
 EOF
 
-sleep 2
+sleep 1
 mkfs.ext4 ${1}1
 }
 fdisk_mkfs $Disk > /dev/null 2>&1
@@ -103,6 +103,6 @@ echo ${Disk}1 $Mount 'ext4 defaults 0 0' >> /etc/fstab
 echo -e "\033[32mSuccess, the /etc/fstab is Write!\033[0m"
 echo -e "\n\033[36mStep 7: Show information about the file system on which each FILE resides\033[0m"
 df -h
-sleep 2
+sleep 1
 echo -e "\n\033[36mStep 8: Show the write configuration to /etc/fstab\033[0m"
 cat /etc/fstab
