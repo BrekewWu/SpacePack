@@ -1,0 +1,82 @@
+# Author: Vtrois <seaton@vtrois.com>
+
+# Github URL: https://github.com/Vtrois/SpacePack
+
+version: "3"
+
+services:
+
+  openresty:
+    image: openresty/openresty:latest
+    container_name: spacepack-openresty
+    restart: always
+    networks:
+      - spacepack_networks
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./wwwroot:/var/www/html:rw
+      - ./services/openresty/conf.d:/etc/nginx/conf.d/:ro
+      - ./services/openresty/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
+      - ./services/openresty/logs/:/usr/local/openresty/nginx/logs/:rw
+
+  php:
+    image: vtrois/spacepack:7.2-fpm
+    container_name: spacepack-php
+    restart: always
+    networks:
+      - spacepack_networks
+    expose:
+      - "9000"
+    volumes:
+      - ./wwwroot:/var/www/html:rw
+
+  mariadb:
+    image: mariadb:10.3
+    container_name: spacepack-mariadb
+    restart: always
+    networks:
+      - spacepack_networks
+    expose:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "spacepack"
+    volumes:
+      - ./services/mariadb/:/var/lib/mysql
+
+  memcached:
+    image: memcached:1.5
+    container_name: spacepack-memcached
+    restart: always
+    networks:
+      - spacepack_networks
+    expose:
+      - "11211"
+
+  redis:
+    image: redis:3.2
+    container_name: spacepack-redis
+    restart: always
+    networks:
+      - spacepack_networks
+    expose:
+      - "6379"
+    volumes:
+      - ./services/redis/data:/data
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
+    container_name: spacepack-phpmyadmin
+    environment:
+      - PMA_HOST=mariadb
+    networks:
+      - spacepack_networks
+    ports:
+      - 8080:80
+
+networks:
+  spacepack_networks:
+    driver: bridge
