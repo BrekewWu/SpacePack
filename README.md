@@ -1,31 +1,116 @@
 # SpacePack
+SpacePack is in order to quickly deploy PHP environment, it contains the OpenResty, PHP, MariaDB, Memcached, Redis and phpMyAdmin.
 
-The SpacePack is written using the shell, in order to quickly deploy LNMP(Linux, Nginx/Tengine/OpenResty, MySQL in a production environment/MariaDB/Percona, PHP), applicable to CentOS 5+ 、Ubuntu 12+、Debian 7+、CoreOS、SUSE 11+、openSUSE 12+
+## How to use
 
-## Table of contents
+### System Inventory
 
-- [Auto fdisk](#auto-fdisk)
-- [Backup](#backup)
++ CentOS 7
++ Docker 1.12
++ Docker Compose
 
-## Auto fdisk
+### Install Docker
 
-### Demo
-
-![Auto fdisk](https://camo.githubusercontent.com/aab54b4db22aef8d1b2103258d4a38996dab1ecf/687474703a2f2f7777312e73696e61696d672e636e2f6c617267652f303036306c6d37546c7931666b746d777a7a7666706a33313030306e376e33712e6a7067) 
-
-### How to use
+Use the [Docker official method](https://docs.docker.com/engine/installation/linux/centos/) installation
 
 ```bash
-# wget https://raw.githubusercontent.com/Vtrois/SpacePack/master/auto-fdisk.sh
-# chmod +x auto-fdisk.sh
-# ./auto-fdisk.sh
+$ sudo yum install -y yum-utils
+
+$ sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+$ sudo yum makecache fast
+
+$ sudo yum -y install docker-ce
+
+$ sudo groupadd docker
+
+$ sudo usermod -aG docker $USER
+
+$ sudo systemctl enable docker
+
+$ sudo systemctl start docker
 ```
 
-## Backup
+### Install Docker Compose
 
-### Demo
+Use the [Docker Compose Gtihub](https://github.com/docker/compose/releases) installation
 
-### How to use
+```bash
+$ curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+
+$ chmod +x /usr/local/bin/docker-compose
+```
+
+### Install SpacePack
+1. Clone project:
+    ```bash
+    $ git clone https://github.com/Vtrois/SpacePack.git
+    ```
+2. Start docker containers:
+    ```bash
+    $ docker-compose up -d
+    ```
+3. Go to your browser and type `localhost`, you will see:
+
+![Demo Image](https://s1.ax1x.com/2018/02/14/9Ym2pF.png)
+
+### Container list
+
++ spacepack-mariadb
++ spacepack-memcached
++ spacepack-openresty
++ spacepack-php
++ spacepack-phpmyadmin
++ spacepack-redis
+
+### Container operation
+
++ Stop a running containers
+
+```bash
+docker stop [CONTAINER NAME]
+```
+
++ Restart a containers
+
+```bash
+docker restart [CONTAINER NAME]
+```
+
+> Notice: [CONTAINER NAME] is in the Container list
+
+## Structure
+
+Within the download you'll find the following directories and files. You'll see something like this :point_down:
+
+```
+SpacePack
+├── docker-compose-dev.yml
+├── docker-compose.yml
+├── services
+│   ├── mariadb
+│   ├── openresty
+│   │   ├── conf.d
+│   │   │   └── default.conf
+│   │   ├── logs
+│   │   └── nginx.conf
+│   ├── php
+│   │   ├── Dockerfile
+│   │   └── config
+│   │       ├── opcache-recommended.ini
+│   │       ├── php.ini
+│   │       └── sources.list.stretch
+│   └── redis
+│       └── data
+└── wwwroot
+    └── default
+        ├── index.html
+        ├── ocp.php
+        ├── phpinfo.php
+        └── tz.php
+```
 
 ## License
 
