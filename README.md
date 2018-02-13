@@ -70,13 +70,13 @@ $ chmod +x /usr/local/bin/docker-compose
 + Stop a running containers
 
 ```bash
-docker stop [CONTAINER NAME]
+$ docker stop [CONTAINER NAME]
 ```
 
 + Restart a containers
 
 ```bash
-docker restart [CONTAINER NAME]
+$ docker restart [CONTAINER NAME]
 ```
 
 > Notice: [CONTAINER NAME] is in the Container list
