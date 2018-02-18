@@ -6,7 +6,7 @@ SpacePack is in order to quickly deploy PHP environment, it contains the OpenRes
 ### System Inventory
 
 + CentOS 7
-+ Docker 1.12
++ Docker 1.13
 + Docker Compose
 
 ### Install Docker
@@ -48,10 +48,19 @@ $ chmod +x /usr/local/bin/docker-compose
     ```bash
     $ git clone https://github.com/Vtrois/SpacePack.git
     ```
+
 2. Start docker containers:
     ```bash
     $ docker-compose up -d
     ```
+    we can also start the other php version by using:
+
+    ```
+    $ docker-compose -f docker-compose-dev.yml up
+    ```
+
+    > Notice: Only one php version can be started, the docker-compose-dev.yml needs to be configured and compiled as needed.
+
 3. Go to your browser and type `localhost`, you will see:
 
 ![Demo Image](https://s1.ax1x.com/2018/02/14/9Ym2pF.png)
